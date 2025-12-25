@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#071826" />
+  <title>Nyaasa Creatives — Merry Christmas</title>
+
+  <!-- Optional font (falls back to system fonts if blocked) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#050c14;
+      --bg1:#061b2c;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --accent: #b7f0ff;
+      --accent2:#8ad3ff;
+      --shadow: 0 30px 80px rgba(0,0,0,.45);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      overflow:hidden;
+      background:
+        radial-gradient(1200px 800px at 20% 15%, rgba(138,211,255,.16), transparent 55%),
+        radial-gradient(900px 700px at 80% 35%, rgba(183,240,255,.10), transparent 60%),
+        radial-gradient(1100px 900px at 50% 100%, rgba(255,255,255,.05), transparent 65%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+
+    /* Subtle animated grain */
+    .grain{
+      position:fixed; inset:-30%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      opacity:.06;
+      mix-blend-mode:overlay;
+      pointer-events:none;
+      animation: drift 14s linear infinite;
+      transform: translate3d(0,0,0);
+    }
+    @keyframes drift{
+      0%{transform:translate(-2%, -2%)}
+      50%{transform:translate(2%, 1%)}
+      100%{transform:translate(-2%, -2%)}
+    }
+
+    canvas#snow{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      pointer-events:none;
+      opacity:.9;
+    }
+
+    .wrap{
+      position:relative;
+      height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    .card{
+      width:min(820px, 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      transform: translateY(14px);
+      opacity:0;
+      animation: cardIn .9s cubic-bezier(.2,.8,.2,1) .15s forwards;
+      backdrop-filter: blur(14px);
+    }
+    @keyframes cardIn{
+      to{transform: translateY(0); opacity:1}
+    }
+
+    .glow{
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(450px 240px at 20% 0%, rgba(183,240,255,.18), transparent 55%),
+        radial-gradient(420px 260px at 85% 30%, rgba(138,211,255,.14), transparent 60%),
+        radial-gradient(680px 380px at 50% 110%, rgba(255,255,255,.10), transparent 70%);
+      filter: blur(2px);
+      opacity:.9;
+      pointer-events:none;
+      animation: glowPulse 6.5s ease-in-out infinite;
+    }
+    @keyframes glowPulse{
+      0%,100%{opacity:.75}
+      50%{opacity:1}
+    }
+
+    .top{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      padding:22px 24px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+    }
+
+    .logoBox{
+      width:54px; height:54px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      flex:0 0 auto;
+      position:relative;
+      overflow:hidden;
+    }
+    .logoBox::after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: conic-gradient(from 180deg, transparent, rgba(183,240,255,.35), transparent);
+      animation: sweep 4.8s linear infinite;
+      opacity:.55;
+    }
+    @keyframes sweep{
+      to{transform:rotate(360deg)}
+    }
+    .logo{
+      width:38px; height:38px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.25));
+      position:relative;
+      z-index:1;
+      border-radius:8px;
+      background:white;
+      padding:4px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:0;
+    }
+    .brand .name{
+      font-weight:700;
+      letter-spacing:.2px;
+      line-height:1.1;
+      font-size:16px;
+    }
+    .brand .tag{
+      font-size:13px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .content{
+      padding: 28px 24px 26px;
+      display:grid;
+      gap:22px;
+    }
+
+    .hero{
+      display:grid;
+      gap:10px;
+    }
+
+    .title{
+      font-size: clamp(30px, 4.6vw, 56px);
+      line-height:1.04;
+      margin:0;
+      letter-spacing:-.6px;
+      text-wrap:balance;
+    }
+    .title span{
+      display:inline-block;
+      background: linear-gradient(90deg, #ffffff, var(--accent));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      filter: drop-shadow(0 14px 26px rgba(0,0,0,.28));
+    }
+
+    .subtitle{
+      margin:0;
+      font-size: clamp(14px, 2.1vw, 18px);
+      color:var(--muted);
+      max-width: 60ch;
+    }
+
+    .divider{
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+    }
+
+    .msg{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      padding: 18px 18px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .msg::before{
+      content:"";
+      position:absolute; inset:-60%;
+      background: radial-gradient(circle at 30% 30%, rgba(183,240,255,.20), transparent 55%);
+      transform: translate3d(0,0,0);
+      animation: floaty 8s ease-in-out infinite;
+      opacity:.8;
+    }
+    @keyframes floaty{
+      0%,100%{transform: translate(-2%, -2%)}
+      50%{transform: translate(2%, 2%)}
+    }
+
+    .msg p{
+      margin:0;
+      position:relative;
+      z-index:1;
+      color: rgba(255,255,255,.85);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .sig{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
+      z-index:1;
+      flex-wrap:wrap;
+    }
+    .sig .who{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .sig .who b{font-weight:700}
+    .sig .who span{color:var(--muted); font-size:13px}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.82);
+      font-size: 13px;
+      letter-spacing:.2px;
+    }
+    .dot{
+      width:8px; height:8px;
+      border-radius:999px;
+      background: var(--accent2);
+      box-shadow: 0 0 0 6px rgba(138,211,255,.10);
+      animation: ping 1.8s ease-in-out infinite;
+    }
+    @keyframes ping{
+      0%,100%{transform:scale(1); opacity:.9}
+      50%{transform:scale(1.35); opacity:.55}
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    button{
+      border:0;
+      background: linear-gradient(180deg, rgba(183,240,255,.26), rgba(183,240,255,.12));
+      color: rgba(255,255,255,.92);
+      border:1px solid rgba(183,240,255,.28);
+      padding: 11px 14px;
+      border-radius: 14px;
+      font-weight:600;
+      cursor:pointer;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    button:hover{transform: translateY(-1px); border-color: rgba(183,240,255,.48)}
+    button:active{transform: translateY(0px) scale(.99)}
+    .ghost{
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.12);
+    }
+
+    .footer{
+      padding: 0 24px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color: rgba(255,255,255,.58);
+      font-size: 12px;
+      flex-wrap:wrap;
+    }
+
+    /* Reveal animations */
+    .reveal{
+      opacity:0;
+      transform: translateY(10px);
+      animation: rise .9s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    .reveal.d1{animation-delay:.25s}
+    .reveal.d2{animation-delay:.35s}
+    .reveal.d3{animation-delay:.45s}
+    .reveal.d4{animation-delay:.55s}
+    @keyframes rise{to{opacity:1; transform: translateY(0)}}
+
+    /* Small screens */
+    @media (max-width:520px){
+      .top{padding:18px}
+      .content{padding:22px 18px}
+      .footer{padding: 0 18px 18px}
+      .logoBox{width:50px;height:50px;border-radius:14px}
+      .logo{width:36px;height:36px}
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important}
+      body{overflow:auto}
+      canvas#snow{display:none}
+      .card{opacity:1; transform:none}
+      .reveal{opacity:1; transform:none}
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.42);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: rgba(255,255,255,.85);
+      font-size: 13px;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 50;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <canvas id="snow" aria-hidden="true"></canvas>
+
+  <main class="wrap">
+    <section class="card" role="article" aria-label="Christmas greeting card">
+      <div class="glow" aria-hidden="true"></div>
+
+      <header class="top">
+        <div class="logoBox" aria-hidden="true">
+          <img class="logo" src="logo.png" alt="Nyaasa Creatives logo" />
+        </div>
+        <div class="brand">
+          <div class="name">Nyaasa Creatives</div>
+          <div class="tag">A little note of gratitude for the season</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="hero">
+          <h1 class="title reveal d1"><span>Merry Christmas</span></h1>
+          <p class="subtitle reveal d2">
+            Wishing you warmth, peace, and a joyful holiday season — and a bright start to the New Year.
+          </p>
+        </div>
+
+        <div class="divider reveal d2" aria-hidden="true"></div>
+
+        <div class="msg reveal d3">
+          <p id="typeText"></p>
+
+          <div class="sig">
+            <div class="who">
+              <b>Bidya Sagar Prajapati</b>
+              <span>CEO / Founder</span>
+            </div>
+
+            <div class="pill" title="A small festive touch">
+              <span class="dot" aria-hidden="true"></span>
+              From all of us at Nyaasa Creatives
+            </div>
+          </div>
+        </div>
+
+        <div class="actions reveal d4">
+          <button id="replayBtn" type="button">Replay animation</button>
+          <button id="copyBtn" class="ghost" type="button">Copy message</button>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span>Thank you for the trust & collaboration.</span>
+        <span>© <span id="year"></span> Nyaasa Creatives</span>
+      </footer>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Copied ✅</div>
+
+  <script>
+    // ----- Typewriter message -----
+    const message =
+      "Thank you for being part of our journey this year. " +
+      "May your holidays be filled with joy, and may the New Year bring bigger wins, better stories, and beautiful work together.";
+
+    const typeEl = document.getElementById("typeText");
+    const yearEl = document.getElementById("year");
+    const toast = document.getElementById("toast");
+    yearEl.textContent = new Date().getFullYear();
+
+    let t = 0, raf = null;
+
+    function typewriter(reset=true){
+      if (raf) cancelAnimationFrame(raf);
+      if (reset){
+        t = 0;
+        typeEl.textContent = "";
+      }
+      const speed = 18; // ms per char feel (approximated)
+      let last = performance.now();
+
+      function step(now){
+        const dt = now - last;
+        if (dt >= speed){
+          last = now;
+          if (t < message.length){
+            typeEl.textContent += message[t++];
+          }
+        }
+        if (t < message.length) raf = requestAnimationFrame(step);
+      }
+      raf = requestAnimationFrame(step);
+    }
+    typewriter(true);
+
+    document.getElementById("replayBtn").addEventListener("click", () => {
+      // retrigger reveal animations
+      document.querySelectorAll(".reveal").forEach((el) => {
+        el.style.animation = "none";
+        // Force reflow
+        void el.offsetHeight;
+        el.style.animation = "";
+      });
+      typewriter(true);
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(
+          "Merry Christmas! " + message + "\n\n— Bidya Sagar Prajapati, CEO / Founder, Nyaasa Creatives"
+        );
+        showToast("Copied!");
+      }catch(e){
+        showToast("Copy not allowed");
+      }
+    });
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1200);
+    }
+
+    // ----- Snow canvas (light, modern) -----
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d", { alpha: true });
+
+    let W = 0, H = 0, DPR = 1;
+    function resize(){
+      DPR = Math.min(2, window.devicePixelRatio || 1);
+      W = Math.floor(window.innerWidth);
+      H = Math.floor(window.innerHeight);
+      canvas.width = Math.floor(W * DPR);
+      canvas.height = Math.floor(H * DPR);
+      canvas.style.width = W + "px";
+      canvas.style.height = H + "px";
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    window.addEventListener("resize", resize, { passive:true });
+    resize();
+
+    const flakes = [];
+    const FLAKE_COUNT = Math.floor(Math.max(60, Math.min(140, W / 8)));
+
+    function rand(min, max){ return Math.random() * (max - min) + min; }
+
+    function seed(){
+      flakes.length = 0;
+      for (let i=0;i<FLAKE_COUNT;i++){
+        flakes.push({
+          x: rand(0, W),
+          y: rand(-H, H),
+          r: rand(1.0, 2.6),
+          vy: rand(0.35, 1.25),
+          vx: rand(-0.25, 0.25),
+          a: rand(0.35, 0.9),
+          phase: rand(0, Math.PI*2),
+        });
+      }
+    }
+    seed();
+
+    let mouseX = W/2;
+    window.addEventListener("pointermove", (e) => { mouseX = e.clientX; }, { passive:true });
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+
+      const wind = (mouseX / W - 0.5) * 0.55;
+
+      for (const f of flakes){
+        f.phase += 0.01;
+        f.x += f.vx + wind*0.18 + Math.sin(f.phase)*0.08;
+        f.y += f.vy;
+
+        if (f.y > H + 8){ f.y = rand(-30, -6); f.x = rand(0, W); }
+        if (f.x < -10) f.x = W + 10;
+        if (f.x > W + 10) f.x = -10;
+
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${f.a})`;
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // Re-seed on orientation change / big resize
+    let lastW = W;
+    setInterval(() => {
+      if (Math.abs(W - lastW) > 120){
+        lastW = W;
+        seed();
+      }
+    }, 700);
+  </script>
+</body>
+</html>
